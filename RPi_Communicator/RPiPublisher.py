@@ -1,6 +1,6 @@
 __author__ = 'luke'
 
-from RPi_Communicator.Getch import _Getch
+from Getch import _Getch
 
 import time
 import zmq
