@@ -1,3 +1,3 @@
 # growow_backend
 
-FIXME: требования к бэкэнду
+FIXME: описание бэкэнда
