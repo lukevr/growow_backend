@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/growow_backend.iml" filepath="$PROJECT_DIR$/.idea/growow_backend.iml" />
+      <module fileurl="file://$USER_HOME$/RPiMount/growow_rpi/.idea/growow_rpi.iml" filepath="$USER_HOME$/RPiMount/growow_rpi/.idea/growow_rpi.iml" />
     </modules>
   </component>
 </project>

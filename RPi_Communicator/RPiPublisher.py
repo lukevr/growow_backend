@@ -23,6 +23,7 @@ def main():
         if key == "q":
             publisher.close()
             context.term()
+            break
         time.sleep(0.5)
 
     # We never get here but clean up anyhow
