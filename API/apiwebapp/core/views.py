@@ -18,3 +18,11 @@ class IntentVideo(JSONResponseMixin,View):
                                         'result':'OK',
                                         })    
 
+
+class StopVideo(JSONResponseMixin,View):
+    def get(self,request):
+        # LET'S HAVE LOGIC HERE
+        return self.render_to_response({
+                                        'result':'OK',
+                                        })    
+
