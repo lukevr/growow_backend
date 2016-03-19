@@ -103,7 +103,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-LOG_ROOT = BASE_DIR + '/logs/'
+LOG_ROOT = BASE_DIR + '/../logs/'
 
 RAVEN_CONFIG = {
     'dsn': 'http://6a7a0e1a913a42f6be2dbbe12aaec1b1:a0cb91e9ab2644b3beba8097f2dd751b@sentry.d.kiev.ua/7',
