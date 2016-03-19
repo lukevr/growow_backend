@@ -5,3 +5,4 @@
 /logs/*
 /static/
 /stop.sh
+/nohup.out
