@@ -100,3 +100,76 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+LOG_ROOT = BASE_DIR + '/logs/'
+
+RAVEN_CONFIG = {
+    'dsn': 'http://6a7a0e1a913a42f6be2dbbe12aaec1b1:a0cb91e9ab2644b3beba8097f2dd751b@sentry.d.kiev.ua/7',
+}
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format' : "%(asctime)s %(levelname)-5s %(name)s:%(lineno)s:%(funcName)s(): %(message)s",
+            'datefmt' : "%d/%m %H:%M:%S"
+        },
+    },
+    'root': {
+        'level': 'INFO',
+         'handlers': ['sentry'],
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        },
+    },
+    'handlers': {
+        'logfile': {
+            'level':'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': LOG_ROOT + "debug",
+            'formatter': 'standard',
+        },
+        'sentry': {
+            'level': 'WARN',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        },                 
+        'console':{
+            'level':'WARN',
+            'class':'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        '': {
+             'level': 'INFO',
+             'handlers': ['sentry'],
+             'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['sentry','mail_admins', ],
+            'level': 'WARN',
+        },
+        'django': {
+            'handlers':['sentry','console','logfile',],
+            'level':'WARN',
+        },
+        'django.db.backends': {
+            'handlers': ['sentry','console','logfile',],
+            'level': 'WARN',
+        },
+        'core': {
+            'handlers': ['sentry','logfile', ],
+            'level': 'DEBUG',
+        },
+    }
+}
