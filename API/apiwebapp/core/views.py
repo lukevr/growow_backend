@@ -8,13 +8,12 @@ from django.http import JsonResponse
 
 class JSONResponseMixin(object):
     def render_to_response(self, context, **response_kwargs):
-        return JsonResponse(self.get_data(context), **response_kwargs)
+        return JsonResponse(context, **response_kwargs)
 
 
 class IntentVideo(JSONResponseMixin,View):
-    def get_data(self,ctx):
-        log.debug(repr(ctx))
-        return ctx
-        
-    
+    def get(self,request):
+        return self.render_to_response({
+                                        'result':'OK',
+                                        })    
 
