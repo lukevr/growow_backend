@@ -15,11 +15,6 @@ class IntentVideo(JSONResponseMixin,View):
     def get_data(self,ctx):
         log.debug(repr(ctx))
         return ctx
-    
-    def get(self,request):
-        log.debug(repr(request))
-        pass
-    
-    
+        
     
 
