@@ -7,7 +7,8 @@ PYVIRTENVCMD=$(shell which virtualenv)
 PIP=${PYENV}/bin/pip
 SETTINGS= 
 # --settings=${DJANGO_SETTINGS_MODULE}
-LISTEN=127.0.0.1:8064
+#LISTEN=127.0.0.1:8064
+LISTEN=0.0.0.0:8064
 TARGET_OS=$(shell uname -s)
 
 
