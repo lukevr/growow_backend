@@ -14,7 +14,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from core import views
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+#    url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^api/intent_video', views.IntentVideo.as_view(),
+        name='intent_video'),
+
+    url(r'^api/stop_video', views.StopVideo.as_view(),
+        name='stop_video'),
+
 ]

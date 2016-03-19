@@ -1,2 +1,8 @@
 /pyenv/
-/.idea
+*.pyc
+*/*/migrations/
+/apiwebapp/db.sqlite3
+/logs/*
+/static/
+/stop.sh
+/nohup.out

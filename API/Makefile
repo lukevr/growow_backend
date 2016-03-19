@@ -5,9 +5,11 @@ PYENV=${PROJECT_HOME}/pyenv
 PYTHON=${PYENV}/bin/python
 PYVIRTENVCMD=$(shell which virtualenv)
 PIP=${PYENV}/bin/pip
+DJANGO_MANAGE=${PROJECT_HOME}/apiwebapp/manage.py
 SETTINGS= 
 # --settings=${DJANGO_SETTINGS_MODULE}
-LISTEN=127.0.0.1:8064
+#LISTEN=127.0.0.1:8064
+LISTEN=0.0.0.0:8064
 TARGET_OS=$(shell uname -s)
 
 
@@ -18,38 +20,20 @@ all: up db collectstatic stop.sh
 up:
 		git pull
 
-
 collectstatic:
-		${PYTHON} ${PROJECT_HOME}/src/manage.py collectstatic --noinput ${SETTINGS}
+		${PYTHON} ${DJANGO_MANAGE} collectstatic --noinput ${SETTINGS}
 	
 db:
-		${PYTHON} ${PROJECT_HOME}/src/manage.py makemigrations ${SETTINGS}
-		${PYTHON} ${PROJECT_HOME}/src/manage.py migrate ${SETTINGS}
+		${PYTHON} ${DJANGO_MANAGE} makemigrations ${SETTINGS}
+		${PYTHON} ${DJANGO_MANAGE} migrate ${SETTINGS}
 
 
 runserver:
-		nohup ${PYTHON} ${PROJECT_HOME}/src/manage.py runserver ${LISTEN} ${SETTINGS} &
+		nohup ${PYTHON} ${DJANGO_MANAGE} runserver ${LISTEN} ${SETTINGS} &
 
 
 createsuperuser:
-		${PYTHON} ${PROJECT_HOME}/src/manage.py createsuperuser ${SETTINGS}
-
-
-migrations_init:
-		${PYTHON} ${PROJECT_HOME}/src/manage.py makemigrations cc_core ${SETTINGS}
-		${PYTHON} ${PROJECT_HOME}/src/manage.py makemigrations cc_dashboard ${SETTINGS}
-		${PYTHON} ${PROJECT_HOME}/src/manage.py makemigrations cc_sshkeys ${SETTINGS}
-		${PYTHON} ${PROJECT_HOME}/src/manage.py makemigrations cc_api ${SETTINGS}
-		${PYTHON} ${PROJECT_HOME}/src/manage.py makemigrations cc_rdp ${SETTINGS}
-		${PYTHON} ${PROJECT_HOME}/src/manage.py makemigrations cc_sip ${SETTINGS}
-
-
-loaddata:
-		${PYTHON} ${PROJECT_HOME}/src/manage.py loaddata ${SETTINGS} SSHKey 
-		${PYTHON} ${PROJECT_HOME}/src/manage.py loaddata ${SETTINGS} SIPServer 
-		${PYTHON} ${PROJECT_HOME}/src/manage.py loaddata ${SETTINGS} SIPClient
-		${PYTHON} ${PROJECT_HOME}/src/manage.py loaddata ${SETTINGS} RDPServer 
-		${PYTHON} ${PROJECT_HOME}/src/manage.py loaddata ${SETTINGS} CrShClient
+		${PYTHON} ${DJANGO_MANAGE} createsuperuser ${SETTINGS}
 
 
 env: ${PYTHON}
@@ -76,6 +60,6 @@ FreeBSD:
 stop.sh: 
 		echo "ps axwwwww | grep ${LISTEN} | grep -v grep | awk '{ print "'$$1'" }' | xargs kill" > stop.sh
 		chmod +x ./stop.sh
-		
-		
+
+
 		
