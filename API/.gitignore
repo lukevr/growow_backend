@@ -1,3 +1,5 @@
 /pyenv/
 *.pyc
 */*/migrations/
+/apiwebapp/db.sqlite3
+/logs/*
