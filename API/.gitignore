@@ -3,3 +3,5 @@
 */*/migrations/
 /apiwebapp/db.sqlite3
 /logs/*
+/static/
+/stop.sh
