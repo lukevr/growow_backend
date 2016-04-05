@@ -58,20 +58,23 @@ while True:
 	# dilate the thresholded image to fill in holes, then find contours
 	# on thresholded image
 	thresh = cv2.dilate(thresh, None, iterations=2)
-	(cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-		cv2.CHAIN_APPROX_SIMPLE)
+
+	(_, cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+	#(cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+	#	cv2.CHAIN_APPROX_SIMPLE)
 
 	# loop over the contours
 	for c in cnts:
 		# if the contour is too small, ignore it
-		if cv2.contourArea(c) < args["min_area"]:
-			continue
+		if cv2.contourArea(c) >= args["min_area"]:
+			# compute the bounding box for the contour, draw it on the frame,
+			# and update the text
+			(x, y, w, h) = cv2.boundingRect(c)
+			cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+			text = "Occupied"
 
-		# compute the bounding box for the contour, draw it on the frame,
-		# and update the text
-		(x, y, w, h) = cv2.boundingRect(c)
-		cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-		text = "Occupied"
+
 
 	# draw the text and timestamp on the frame
 	cv2.putText(frame, "Room Status: {}".format(text), (10, 20),
@@ -83,6 +86,11 @@ while True:
 	cv2.imshow("Security Feed", frame)
 	cv2.imshow("Thresh", thresh)
 	cv2.imshow("Frame Delta", frameDelta)
+
+	# avoid noise
+	if text == "Unoccupied":
+		firstFrame = gray
+
 	key = cv2.waitKey(1) & 0xFF
 
 	# if the `q` key is pressed, break from the lop
